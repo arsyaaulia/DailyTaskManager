@@ -130,7 +130,7 @@ public class DailyTaskManager{
         System.out.println("╔══════════════════════╗");
         System.out.println("║" + BlueText +  "  Daily Task Manager  " + stopAnsi+ "║");
         System.out.println("╚══════════════════════╝");
-        System.out.println("Hello! Welcome to Daily Task Manager!");
+        System.out.println("\nHello! Welcome to Daily Task Manager!");
         System.out.println("Your productivity is our priority <3");
 
         int kapasitas = 5; //untuk array
@@ -180,8 +180,13 @@ public class DailyTaskManager{
                         }
                     } 
                     else if(menu == 4){
-                        undoTaskCompletion(taskList, taskCount);
-                        showTasks(taskList, taskCount);
+                        if (taskCount == 0) {
+                            System.out.println("No Tasks available. Please add task first.");
+                        }
+                        else {
+                            undoTaskCompletion(taskList, taskCount);
+                            showTasks(taskList, taskCount);
+                        }
                     } 
                     else if (menu == 5) {
                         break;
