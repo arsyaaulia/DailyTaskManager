@@ -168,6 +168,9 @@ public class DailyTaskManager{
                         showTasks(taskList, taskCount);
                     } 
                     else if (menu == 2) { //update Tasks
+                        if (taskCount == 0){
+                            System.out.println("No Tasks available. Please add task first.");
+                        }
                         updateTasks(taskList, taskCount);
                         showTasks(taskList, taskCount);
                     } 
