@@ -19,7 +19,7 @@ public class DailyTaskManager{
         }
         System.out.println("\nYour Daily Tasks:");
         for (int i = 0; i < taskCount; i++) {
-            System.out.println((i + 1) + ". [ ] " + taskList[i]);
+            System.out.println((i + 1) + ". [ ] " + taskList[i]); //gimana maksudnya?
         }
     }
     //Fungsi Update Tasks
@@ -73,13 +73,7 @@ public class DailyTaskManager{
         }
     }
 
-    static void addDynamicTask() {
-        System.out.println("Enter a new task: ");
-        String newTask = input.nextLine();
-        dynamicTasks.add(newTask);
-        System.out.println("Task added successfully!");
-    }
-
+    //Fungsi Remove Dynamic Task
     static void removeDynamicTask(){
         if (dynamicTasks.isEmpty()) {
             System.out.println("No tasks to remove.");
@@ -101,7 +95,7 @@ public class DailyTaskManager{
             System.out.println("Invalid task number.");
         }
     }
-
+    //Fungsi View Dynamic Tasks
     static void viewDynamicTasks() {
         System.out.println("\nDynamic Task List: ");
         if (dynamicTasks.isEmpty()){
@@ -115,10 +109,10 @@ public class DailyTaskManager{
 
     public static void main(String[] args) {
         System.out.println("\nPreparing your workspace...");
-        int totalBlocks = 24;
+        int totalBlocks = 25;
         for (int i = 0; i <= totalBlocks; i++) {
             try {
-                Thread.sleep(70);
+                Thread.sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -126,17 +120,20 @@ public class DailyTaskManager{
         }
 
         clearScreen();
+        System.out.println("╔══════════════════════╗");
+        System.out.println("║  Daily Task Manager  ║");
+        System.out.println("╚══════════════════════╝");
         System.out.println("Hello! Welcome to Daily Task Manager!");
         System.out.println("Your productivity is our priority <3");
 
-        int kapasitas = 5;
+        int kapasitas = 5; //untuk array
         int taskCount = 0;
         String[] taskList = new String[kapasitas];
 
         while (true) {
             System.out.println("\nAvailable System");
             System.out.println("1. Array Management System (Max store task : 5)");
-            System.out.println("2. Linked List Management System");
+            System.out.println("2. Linked List Management System (Unlimited)");
             System.out.println("3. Quit");
             System.out.print("Please choose the system you want: ");
             int systemMenu = input.nextInt();
@@ -159,7 +156,7 @@ public class DailyTaskManager{
                             System.out.print("Task " + (taskCount + 1) + ": ");
                             String dailyTask = input.nextLine();
                             if (dailyTask.equals("q")) break;
-                            taskList[taskCount++] = dailyTask;
+                            taskList[taskCount++] = dailyTask; //ini maksudnya apa??
                         }
                         showTasks(taskList, taskCount);
                     } else if (menu == 2) {
@@ -183,13 +180,30 @@ public class DailyTaskManager{
                     System.out.println("\nLinked List Menu");
                     System.out.println("1. Add Task");
                     System.out.println("2. Remove Task");
-                    System.out.println("3. View Tasks");
-                    System.out.println("4. Back to main menu"); 
+                    System.out.println("3. Back to main menu"); 
+                    System.out.print("Choose menu: ");
                     int menuLinkedList = input.nextInt();
                     input.nextLine();
 
                     if (menuLinkedList == 1 ){
-                        addDynamicTask();
+                        System.out.println("\nInput Daily Task (type 'q' to stop)");
+
+                        while (true) {
+                            System.out.print("Task " + (taskCount + 1) + ": ");
+                            String newTask = input.nextLine();
+                            if (newTask.equals("q")) break;
+                            dynamicTasks.add(newTask);
+                            taskCount++;
+                        }
+
+                        System.out.println("Task added successfully!");
+                        viewDynamicTasks();
+                    } else if (menuLinkedList == 2){
+                        removeDynamicTask();
+                    }else if (menuLinkedList == 3){
+                        break;
+                    }else{
+                        System.out.println("Invalid menu selection");
                     }
                 }
             } 
