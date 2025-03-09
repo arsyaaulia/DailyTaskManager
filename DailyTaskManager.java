@@ -2,7 +2,7 @@ import java.util.Scanner;
 import java.util.Stack;
 import java.util.LinkedList;
 
-public class DailyTaskManagerBaruBangeet {
+public class DailyTaskManager{
     static Scanner input = new Scanner(System.in);
     static Stack<String> completedTasks = new Stack<>();
     static LinkedList<String> dynamicTasks = new LinkedList<>();
