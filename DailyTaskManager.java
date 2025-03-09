@@ -19,7 +19,7 @@ public class DailyTaskManager{
         }
         System.out.println("\nYour Daily Tasks:");
         for (int i = 0; i < taskCount; i++) {
-            System.out.println((i + 1) + ". [ ] " + taskList[i]); 
+            System.out.println((i + 1) + taskList[i]); 
         }
     }
     //Fungsi Update Tasks
@@ -44,13 +44,13 @@ public class DailyTaskManager{
     //Fungsi Complete Tasks
     public static void completeTasks(String[] taskList, int taskCount) {
         showTasks(taskList, taskCount);
-        System.out.println("\nEnter the task number to mark as completed: ");
+        System.out.print("\nEnter the task number to mark as completed: ");
         int index = input.nextInt() - 1;
         input.nextLine();
 
         if (index >= 0 && index < taskCount) {
             completedTasks.push(taskList[index]);
-            taskList[index] = "[✓]" + taskList[index];
+            taskList[index] = taskList[index] + " [✓]";
             System.out.println("Task marked as completed!");
         } else {
             System.out.println("Invalid task number.");
@@ -167,8 +167,9 @@ public class DailyTaskManager{
                         }
                         showTasks(taskList, taskCount);
                     } 
-                    else if (menu == 2) { //updataTasks
+                    else if (menu == 2) { //update Tasks
                         updateTasks(taskList, taskCount);
+                        showTasks(taskList, taskCount);
                     } 
                     else if (menu == 3){ //Complete Tasks
                         if (taskCount == 0) {
@@ -220,12 +221,15 @@ public class DailyTaskManager{
 
                         System.out.println("Task added successfully!");
                         viewDynamicTasks();
-                    } else if (menuLinkedList == 2){
+                    }
+                    else if (menuLinkedList == 2){
                         removeDynamicTask();
                         viewDynamicTasks();
-                    }else if (menuLinkedList == 3){
+                    }
+                    else if (menuLinkedList == 3){
                         break;
-                    }else{
+                    }
+                    else{
                         System.out.println("Invalid menu selection");
                     }
                 }
