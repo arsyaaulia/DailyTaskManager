@@ -7,6 +7,10 @@ public class DailyTaskManager{
     static Stack<String> completedTasks = new Stack<>();
     static LinkedList<String> dynamicTasks = new LinkedList<>();
 
+    public static final String BlueText = "\033[34m";
+    public static final String RedText = "\033[31m";
+    public static final String stopAnsi ="\033[0m";
+
     public static void clearScreen() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
@@ -14,7 +18,7 @@ public class DailyTaskManager{
     //Fungsi Show Tasks
     public static void showTasks(String[] taskList, int taskCount) {
         if (taskCount == 0) {
-            System.out.println("\nNo tasks available.");
+            System.out.println(RedText + "\nNo tasks available." + stopAnsi);
             return;
         }
         System.out.println("\nYour Daily Tasks:");
@@ -25,7 +29,7 @@ public class DailyTaskManager{
     //Fungsi Update Tasks
     public static void updateTasks(String[] taskList, int taskCount) {
         if (taskCount == 0) {
-            System.out.println("No tasks to update.");
+            System.out.println(RedText + "No tasks to update." + stopAnsi);
             return;
         }
         showTasks(taskList, taskCount);
@@ -38,7 +42,7 @@ public class DailyTaskManager{
             taskList[index] = input.nextLine();
             System.out.println("Task updated successfully!");
         } else {
-            System.out.println("Invalid task number.");
+            System.out.println(RedText +"Invalid task number." + stopAnsi);
         }
     }
     //Fungsi Complete Tasks
@@ -53,7 +57,7 @@ public class DailyTaskManager{
             taskList[index] = taskList[index] + " [✓]";
             System.out.println("Task marked as completed!");
         } else {
-            System.out.println("Invalid task number.");
+            System.out.println(RedText + "Invalid task number." + stopAnsi);
         }
     }
     //Fungsi Undo Task Completion
@@ -69,7 +73,7 @@ public class DailyTaskManager{
                 }
             }
         } else {
-            System.out.println("No completed tasks to undo");
+            System.out.println(RedText + "No completed tasks to undo" + stopAnsi);
         }
     }
 
@@ -112,10 +116,8 @@ public class DailyTaskManager{
     }
 
     public static void main(String[] args) {
-        String BlueText = "\033[34m";
-        String stopAnsi ="\033[0m";
-
         System.out.println("\nPreparing your workspace...");
+
         int totalBlocks = 25;
         for (int i = 0; i <= totalBlocks; i++) {
             try {
@@ -135,6 +137,7 @@ public class DailyTaskManager{
 
         int kapasitas = 5; //untuk array
         int taskCount = 0;
+        int systemMenu = 0;
         String[] taskList = new String[kapasitas];
 
         while (true) {
@@ -143,7 +146,18 @@ public class DailyTaskManager{
             System.out.println("2. Linked List Management System (Unlimited)");
             System.out.println("3. Quit");
             System.out.print("Please choose the system you want: ");
-            int systemMenu = input.nextInt();
+
+            while(true){
+                try {
+                    System.out.print("Please choose the system you want: ");
+                    systemMenu = input.nextInt();
+                    break;
+                } catch (Exception e){
+                    System.out.println("Invalid input! Please enter a number");
+                    input.nextLine();
+                }
+            }
+            
             //Array Menu
             if (systemMenu == 1) {
                 while (true) {
@@ -165,27 +179,28 @@ public class DailyTaskManager{
                             if (dailyTask.equals("q")) break;
                             taskList[taskCount++] = dailyTask; //ini maksudnya apa??
                         }
+                        System.out.println("Task added successfully!.");
                         showTasks(taskList, taskCount);
                     } 
                     else if (menu == 2) { //update Tasks
                         if (taskCount == 0){
-                            System.out.println("No Tasks available. Please add task first.");
+                            System.out.println(RedText + "No Tasks available. Please add task first." + stopAnsi);
                         }
                         updateTasks(taskList, taskCount);
                         showTasks(taskList, taskCount);
                     } 
                     else if (menu == 3){ //Complete Tasks
                         if (taskCount == 0) {
-                            System.out.println("No Tasks available. Please add task first.");                        
+                            System.out.println(RedText + "No Tasks available. Please add task first." + stopAnsi);                        
                         }
                         else {
                             completeTasks(taskList, taskCount);
                             showTasks(taskList, taskCount);
                         }
                     } 
-                    else if(menu == 4){
+                    else if(menu == 4){ //Undo task complete
                         if (taskCount == 0) {
-                            System.out.println("No Tasks available. Please add task first.");
+                            System.out.println(RedText + "No Tasks available. Please add task first." +stopAnsi);
                         }
                         else {
                             undoTaskCompletion(taskList, taskCount);
@@ -225,9 +240,13 @@ public class DailyTaskManager{
                         System.out.println("Task added successfully!");
                         viewDynamicTasks();
                     }
-                    else if (menuLinkedList == 2){
-                        removeDynamicTask();
-                        viewDynamicTasks();
+                    else if (menuLinkedList == 2){ //Remove Dynamic
+                        if (taskCount == 0){
+                            System.out.println(RedText + "No Tasks available. Please add task first." +stopAnsi);
+                        } else{
+                            removeDynamicTask();
+                            viewDynamicTasks();
+                        }
                     }
                     else if (menuLinkedList == 3){
                         break;
