@@ -9,21 +9,21 @@ public class DailyTaskManager{
 
     public static final String BlueText = "\033[34m";
     public static final String RedText = "\033[31m";
+    public static final String GreenText = "\033[32m";
     public static final String stopAnsi ="\033[0m";
 
     public static void clearScreen() {
         System.out.print("\033[H\033[2J");
-        System.out.flush();
     }
     //Fungsi Show Tasks
     public static void showTasks(String[] taskList, int taskCount) {
         if (taskCount == 0) {
-            System.out.println(RedText + "\nNo tasks available." + stopAnsi);
+            System.out.println(RedText + "\nNo tasks available. Please add task first" + stopAnsi);
             return;
         }
         System.out.println("\nYour Daily Tasks:");
         for (int i = 0; i < taskCount; i++) {
-            System.out.println((i + 1) + taskList[i]); 
+            System.out.println("Task " +(i + 1) + ": " + taskList[i]); 
         }
     }
     //Fungsi Update Tasks
@@ -40,7 +40,7 @@ public class DailyTaskManager{
         if (index >= 0 && index < taskCount) {
             System.out.print("Enter the new task: ");
             taskList[index] = input.nextLine();
-            System.out.println("Task updated successfully!");
+            System.out.println(GreenText + "Task updated successfully!" + stopAnsi);
         } else {
             System.out.println(RedText +"Invalid task number." + stopAnsi);
         }
@@ -55,7 +55,7 @@ public class DailyTaskManager{
         if (index >= 0 && index < taskCount) {
             completedTasks.push(taskList[index]);
             taskList[index] = taskList[index] + " [✓]";
-            System.out.println("Task marked as completed!");
+            System.out.println(GreenText +"Task marked as completed!" + stopAnsi);
         } else {
             System.out.println(RedText + "Invalid task number." + stopAnsi);
         }
@@ -80,7 +80,7 @@ public class DailyTaskManager{
     //Fungsi Remove Dynamic Task
     static void removeDynamicTask(){
         if (dynamicTasks.isEmpty()) {
-            System.out.println("No tasks to remove.");
+            System.out.println(RedText +"No tasks to remove." + stopAnsi);
             return;
         }
         System.out.println("\nDynamic Tasks: ");
@@ -94,24 +94,21 @@ public class DailyTaskManager{
 
         if (index >= 0 && index < dynamicTasks.size()){
             dynamicTasks.remove(index);
-            System.out.println("Task removed successfully!");
+            System.out.println(GreenText + "Task removed successfully!" + stopAnsi);
         } else {
-            System.out.println("Invalid task number.");
+            System.out.println(RedText + "Invalid task number." + stopAnsi);
         }
     }
     //Fungsi View Dynamic Tasks
     static void viewDynamicTasks() {
         System.out.println("\nDynamic Task List: ");
         if (dynamicTasks.isEmpty()){
-            System.out.println("No tasks available");
+            System.out.println(RedText + "No Tasks available. Please add task first." + stopAnsi);
         } else {
 
             for (int i = 0; i<dynamicTasks.size(); i++) {
                 System.out.println(i + 1 +". " + dynamicTasks.get(i));
             }
-            //for (String task : dynamicTasks){
-                //System.out.println("- " + task);
-            //}
         }
     }
 
@@ -153,7 +150,7 @@ public class DailyTaskManager{
                     systemMenu = input.nextInt();
                     break;
                 } catch (Exception e){
-                    System.out.println("Invalid input! Please enter a number");
+                    System.out.println(RedText+"Invalid input! Please enter a number"+stopAnsi);
                     input.nextLine();
                 }
             }
@@ -186,8 +183,10 @@ public class DailyTaskManager{
                         if (taskCount == 0){
                             System.out.println(RedText + "No Tasks available. Please add task first." + stopAnsi);
                         }
-                        updateTasks(taskList, taskCount);
-                        showTasks(taskList, taskCount);
+                        else{
+                            updateTasks(taskList, taskCount);
+                            showTasks(taskList, taskCount);
+                        }
                     } 
                     else if (menu == 3){ //Complete Tasks
                         if (taskCount == 0) {
@@ -211,7 +210,7 @@ public class DailyTaskManager{
                         break;
                     } 
                     else {
-                        System.out.println("Invalid input.");
+                        System.out.println(RedText + "Invalid input." + stopAnsi);
                     }
                 }
             } 
@@ -241,18 +240,17 @@ public class DailyTaskManager{
                         viewDynamicTasks();
                     }
                     else if (menuLinkedList == 2){ //Remove Dynamic
-                        if (taskCount == 0){
-                            System.out.println(RedText + "No Tasks available. Please add task first." +stopAnsi);
-                        } else{
-                            removeDynamicTask();
-                            viewDynamicTasks();
+                        if(dynamicTasks.isEmpty()){
+                            System.err.println(RedText + "Invalid input." + stopAnsi);
                         }
+                        removeDynamicTask();
+                        viewDynamicTasks();
                     }
                     else if (menuLinkedList == 3){
                         break;
                     }
                     else{
-                        System.out.println("Invalid menu selection");
+                        System.out.println(RedText + "Invalid menu selection" + stopAnsi);
                     }
                 }
             } 
